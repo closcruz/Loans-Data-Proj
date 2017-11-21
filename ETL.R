@@ -1,0 +1,27 @@
+library(tidyverse)
+
+loans_acc = read_csv("C:\\Users\\Owner\\Documents\\LoanStats3a.csv", col_types = cols(
+  "id" = col_skip(),
+  "member_id" = col_skip(),
+  "int_rate" = col_number(),
+  "emp_length" = col_number(),
+  "revol_util" = col_number()
+))
+
+loans_rej = read_csv("C:\\Users\\Owner\\Documents\\RejectStatsA.csv", col_names = c(
+  "amt_req", "app_date", "loan_title", "risk_score", "dti_ratio", "zip", "state", "emp_length", "policy_code"), 
+col_types = cols(
+  "dti_ratio" = col_number(),
+  "emp_length" = col_number()), 
+skip = 2)
+
+# Accepted loans data set has alot of columns that have no data in them so we'll remove them.
+loans_acc = loans_acc[colSums(!is.na(loans_acc)) > 0]
+
+# Rejected loans data set has some rows with NA risk score factor
+# Since this variable seems important in analysis and since data set is huge, I take out these rows with NA risk score.
+loans_rej = loans_rej %>% na.omit()
+
+# Export cleaned csv
+write_csv(loans_acc, "Data/loans_acc.csv")
+write_csv(loans_rej, "Data/loans_rej.csv")

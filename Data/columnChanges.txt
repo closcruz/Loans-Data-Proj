@@ -1,0 +1,8 @@
+Type changes for columns in the Loans Accepted data set:
+int_rate - chr -> num
+emp_length - chr -> num
+revol_util - chr -> num
+
+Changes for columns in the Loans Rejected data set:
+dti_ratio - chr -> num
+emp_length - chr -> num
